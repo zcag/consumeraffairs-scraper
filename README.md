@@ -158,3 +158,4 @@ Combine with our other review platform scrapers for cross-platform reputation an
 - [Trustpilot Reviews Scraper](https://apify.com/quasi_grass/trustpilot-review-scraper)
 - [SiteJabber Reviews Scraper](https://apify.com/quasi_grass/sitejabber-review-scraper)
 - [PissedConsumer Reviews Scraper](https://apify.com/quasi_grass/pissedconsumer-review-scraper)
+- [Capterra Reviews Scraper](https://apify.com/quasi_grass/capterra-review-scraper)
