@@ -27,8 +27,9 @@
         "proxyConfig": {
             "title": "Proxy configuration",
             "type": "object",
-            "description": "Select proxies to use. Apify Proxy is recommended for bypassing bot protection.",
+            "description": "Residential proxies recommended for ConsumerAffairs (PerimeterX bot protection).",
             "editor": "proxy",
+            "sectionCaption": "Advanced settings",
             "default": { "useApifyProxy": true, "apifyProxyGroups": ["RESIDENTIAL"] }
         }
     },

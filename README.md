@@ -116,10 +116,27 @@ For more context, see [Is web scraping legal?](https://blog.apify.com/is-web-scr
 - **Use URL paths**: You can enter just the path portion like `homeowners/american_home_shield` instead of full URLs.
 - **Industry categories**: ConsumerAffairs organizes companies by category (homeowners, insurance, finance, health, etc.) — useful for industry-wide scraping.
 
+## Why this scraper?
+
+- **Handles PerimeterX bot protection** — the main reason there's almost no competition. Uses PlaywrightCrawler with residential proxy support.
+- **95%+ success rate** — the only alternative on Apify charges $20/mo flat and has ~50% failure rate. This Actor uses pay-per-result ($2.50/1K) so you only pay for successful extractions.
+- **Service industry focus** — ConsumerAffairs covers home services, insurance, finance, health — industries where review data drives real business decisions.
+
+## API access
+
+Call this Actor programmatically from any language:
+
+```bash
+curl "https://api.apify.com/v2/acts/quasi_grass~consumeraffairs-review-scraper/run-sync-get-dataset-items?token=YOUR_TOKEN" \
+  -d '{"companyUrls": ["homeowners/american_home_shield"], "maxReviewsPerCompany": 100}'
+```
+
+Or use the [Apify client](https://docs.apify.com/api/client/js/) for Node.js, Python, or any language. Works with Google Sheets, Zapier, Make, Slack, and 100+ integrations.
+
 ## Related scrapers
 
 Combine with our other review platform scrapers for cross-platform reputation analysis:
 
-- [Trustpilot Review Scraper](https://apify.com/zcag/trustpilot-review-scraper)
-- [SiteJabber Review Scraper](https://apify.com/zcag/sitejabber-review-scraper)
-- [PissedConsumer Review Scraper](https://apify.com/zcag/pissedconsumer-review-scraper)
+- [Trustpilot Reviews Scraper](https://apify.com/quasi_grass/trustpilot-review-scraper)
+- [SiteJabber Reviews Scraper](https://apify.com/quasi_grass/sitejabber-review-scraper)
+- [PissedConsumer Reviews Scraper](https://apify.com/quasi_grass/pissedconsumer-review-scraper)
