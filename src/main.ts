@@ -1,5 +1,5 @@
-import { PlaywrightCrawler, Dataset } from '@crawlee/playwright';
-import { Actor, log } from 'apify';
+import { PlaywrightCrawler } from '@crawlee/playwright';
+import { Actor, Dataset, log } from 'apify';
 import type { Page } from 'playwright';
 
 // ── Types ──────────────────────────────────────────────────────────────
@@ -321,7 +321,7 @@ const crawler = new PlaywrightCrawler({
         const { reviews: pageReviews, companyInfo } = await extractReviewsFromPage(page, companySlug, companyBaseUrl);
 
         if (includeCompanyInfo && !companyInfoEmitted && companyInfo) {
-            await Dataset.pushData(companyInfo);
+            await Actor.pushData(companyInfo);
             companyInfoEmitted = true;
         }
 
@@ -338,7 +338,7 @@ const crawler = new PlaywrightCrawler({
         }
 
         if (reviews.length > 0) {
-            await Dataset.pushData(reviews);
+            await Actor.pushData(reviews, 'result');
             reviewCount += reviews.length;
             log.info(`Pushed ${reviews.length} reviews (total: ${reviewCount}) for ${companySlug}`);
         }
