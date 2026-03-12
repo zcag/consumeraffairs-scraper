@@ -1,30 +1,60 @@
 # ConsumerAffairs Review Scraper
 
-Apify Actor that extracts reviews, ratings, and company data from [ConsumerAffairs.com](https://www.consumeraffairs.com/).
+Extract reviews, ratings, and company data from [ConsumerAffairs.com](https://www.consumeraffairs.com/) — a trusted consumer review and research platform covering home services, insurance, finance, health, and more.
 
-Uses **Playwright** (headless browser) to handle ConsumerAffairs' bot protection. Automatically paginates through all review pages.
+This Actor uses a headless browser (Playwright) to reliably handle ConsumerAffairs' bot protection, extracting structured review data including ratings, review text, author details, and company profiles. Built for reputation monitoring, competitive analysis, and market research in service-heavy industries.
 
-## Features
+## What data can you extract from ConsumerAffairs?
 
-- Extract reviews with ratings, titles, text, author info, and dates
-- Company profile data (overall rating, total reviews)
-- Multi-company scraping in a single run
-- Automatic pagination with redirect detection
-- Handles bot protection via Playwright + proxy rotation
-- Configurable max reviews per company
+| Field | Example |
+|-------|---------|
+| Star rating | 1-5 |
+| Review title | "Great service" |
+| Full review text | Complete review content |
+| Author name | "John D." |
+| Author location | "Houston, TX" |
+| Published date | "2026-03-10" |
+| Review URL | Direct link to review |
+| Company name | "American Home Shield" |
+| Company URL | ConsumerAffairs page |
+| Overall rating | Aggregate score |
+| Total reviews | Total count |
+
+## How to scrape ConsumerAffairs reviews
+
+1. Click **Try for free** to open the Actor in Apify Console
+2. Enter company page URLs or paths (e.g., `homeowners/american_home_shield` or `https://www.consumeraffairs.com/homeowners/american_home_shield.html`)
+3. Set the maximum number of reviews per company
+4. Click **Start** and wait for the run to finish
+5. Download results as JSON, CSV, or Excel — or access via the Apify API
+
+Schedule automatic runs to monitor review trends. Connect to Google Sheets, Slack, Zapier, or webhooks for real-time alerts.
 
 ## Input
 
 | Field | Type | Description | Default |
 |-------|------|-------------|---------|
-| `companyUrls` | string[] | Company page URLs or paths (e.g. `homeowners/american_home_shield`) | required |
-| `maxReviewsPerCompany` | number | Max reviews per company (0 = unlimited) | 100 |
+| `companyUrls` | string[] | Company page URLs or paths (e.g., `homeowners/american_home_shield`) | required |
+| `maxReviewsPerCompany` | number | Max reviews per company. 0 = unlimited. | 100 |
 | `includeCompanyInfo` | boolean | Include company profile summary | true |
-| `proxyConfig` | object | Proxy settings (residential recommended) | Apify Proxy |
+| `proxyConfig` | object | Proxy configuration (**residential recommended**) | Apify Proxy |
+
+### Example input
+
+```json
+{
+    "companyUrls": [
+        "homeowners/american_home_shield",
+        "https://www.consumeraffairs.com/insurance/geico.html"
+    ],
+    "maxReviewsPerCompany": 100,
+    "includeCompanyInfo": true
+}
+```
 
 ## Output
 
-Each review includes:
+### Review
 
 ```json
 {
@@ -42,25 +72,54 @@ Each review includes:
 }
 ```
 
-## Usage
+### Company profile
 
-### Via Apify Console
-
-1. Go to the actor page on Apify Store
-2. Enter company URLs
-3. Click Run
-
-### Via API
-
-```bash
-curl -X POST "https://api.apify.com/v2/acts/YOUR_USERNAME~consumeraffairs-review-scraper/runs" \
-  -H "Authorization: Bearer YOUR_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{"companyUrls": ["homeowners/american_home_shield"]}'
+```json
+{
+    "type": "companyInfo",
+    "companyName": "American Home Shield",
+    "companySlug": "homeowners/american_home_shield",
+    "companyUrl": "https://www.consumeraffairs.com/homeowners/american_home_shield.html",
+    "overallRating": 3.8,
+    "totalReviews": 12450
+}
 ```
 
-## Notes
+## How much does it cost to scrape ConsumerAffairs?
 
-- ConsumerAffairs uses PerimeterX bot protection. **Residential proxies are recommended** for reliable results.
-- The scraper first attempts JSON-LD extraction, then falls back to DOM parsing.
-- Pagination end is detected via redirect (ConsumerAffairs redirects past-last-page requests).
+This Actor uses Playwright (headless browser) because ConsumerAffairs has PerimeterX bot protection. Browser-based scraping costs more than HTTP-only scrapers:
+
+- **~$2-5 per 1,000 reviews** with residential proxy (recommended)
+- Datacenter proxies may work for small runs but are less reliable due to bot detection
+
+For example, scraping 1,000 reviews costs approximately $2-5 in platform usage. The Apify Free plan includes $5/month of credits for testing.
+
+## Use cases
+
+- **Home services research** — ConsumerAffairs is a leading source for reviews of home warranty companies, contractors, insurance providers, and other service businesses.
+- **Insurance comparison** — Collect and compare customer reviews across insurance providers (auto, home, health, life).
+- **Financial services analysis** — Monitor reviews of banks, credit card companies, lenders, and financial advisors.
+- **Brand monitoring** — Track your company's ConsumerAffairs reviews over time. Schedule runs to catch new reviews early.
+- **Competitive intelligence** — Compare review volumes, ratings, and common complaints across competitors in service industries.
+- **Lead qualification** — Assess potential partners or vendors based on their customer review history.
+
+## Is it legal to scrape ConsumerAffairs?
+
+Web scraping of publicly available data is generally legal. ConsumerAffairs reviews are publicly accessible without login. This Actor only collects publicly visible information.
+
+For more context, see [Is web scraping legal?](https://blog.apify.com/is-web-scraping-legal/) on the Apify blog. Always review applicable terms of service and data protection regulations for your use case.
+
+## Tips
+
+- **Use residential proxies**: ConsumerAffairs uses PerimeterX bot protection. Residential proxies provide the most reliable results.
+- **Start with a small test**: Set `maxReviewsPerCompany: 10` to verify everything works before large runs.
+- **Use URL paths**: You can enter just the path portion like `homeowners/american_home_shield` instead of full URLs.
+- **Industry categories**: ConsumerAffairs organizes companies by category (homeowners, insurance, finance, health, etc.) — useful for industry-wide scraping.
+
+## Related scrapers
+
+Combine with our other review platform scrapers for cross-platform reputation analysis:
+
+- [Trustpilot Review Scraper](https://apify.com/zcag/trustpilot-review-scraper)
+- [SiteJabber Review Scraper](https://apify.com/zcag/sitejabber-review-scraper)
+- [PissedConsumer Review Scraper](https://apify.com/zcag/pissedconsumer-review-scraper)

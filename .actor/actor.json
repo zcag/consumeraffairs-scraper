@@ -3,7 +3,7 @@
     "actorSpecification": 1,
     "name": "consumeraffairs-review-scraper",
     "title": "ConsumerAffairs Review Scraper",
-    "description": "Extract reviews, ratings, and company data from ConsumerAffairs.com. Handles bot protection with Playwright. Low competition on Apify Store.",
+    "description": "Scrape ConsumerAffairs reviews, ratings, and company data. Handles PerimeterX bot protection with Playwright. Extract reviews for home services, insurance, finance, and more.",
     "version": "0.1",
     "buildTag": "latest",
     "meta": {
