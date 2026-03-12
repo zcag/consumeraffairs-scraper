@@ -313,8 +313,13 @@ const crawler = new PlaywrightCrawler({
             }
         }
 
-        // Wait a bit for dynamic content
-        await page.waitForTimeout(2000);
+        // Wait for review content to render
+        await page.waitForSelector(
+            '.rvw, [itemtype*="Review"], script[type="application/ld+json"]',
+            { timeout: 10000 },
+        ).catch(() => {
+            // Fallback: page may have no reviews or use different selectors
+        });
 
         log.info(`Processing ${request.url} (${reviewCount} reviews so far for ${companySlug})`);
 
@@ -364,8 +369,8 @@ const crawler = new PlaywrightCrawler({
                     companyInfoEmitted,
                 },
             }]);
-        } else if (reviews.length > 0 && totalPages <= 1) {
-            // Try next page speculatively
+        } else if (reviews.length > 0 && totalPages <= 1 && currentPage < 100) {
+            // Try next page speculatively (capped at 100 to prevent infinite crawling)
             const nextUrl = buildPageUrl(companyBaseUrl, currentPage + 1);
             await c.addRequests([{
                 url: nextUrl,
