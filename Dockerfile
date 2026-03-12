@@ -2,7 +2,7 @@ FROM apify/actor-node-playwright-chrome:22 AS builder
 COPY package*.json ./
 RUN npm install --include=dev --audit=false
 COPY . .
-RUN npm run build
+RUN npm run build && ls -la dist/
 
 FROM apify/actor-node-playwright-chrome:22
 COPY package*.json ./
