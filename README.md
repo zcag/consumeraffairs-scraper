@@ -85,14 +85,21 @@ Schedule automatic runs to monitor review trends. Connect to Google Sheets, Slac
 }
 ```
 
-## How much does it cost to scrape ConsumerAffairs?
+## Pricing
 
-This Actor uses Playwright (headless browser) because ConsumerAffairs has PerimeterX bot protection. Browser-based scraping costs more than HTTP-only scrapers:
+Pay only for results — no monthly subscription.
 
-- **~$2-5 per 1,000 reviews** with residential proxy (recommended)
-- Datacenter proxies may work for small runs but are less reliable due to bot detection
+| Reviews | Cost |
+|---------|------|
+| 1,000 | $2.50 |
+| 5,000 | $12.50 |
+| 10,000 | $25.00 |
 
-For example, scraping 1,000 reviews costs approximately $2-5 in platform usage. The Apify Free plan includes $5/month of credits for testing.
+Platform usage: ~$2-5 per 1,000 reviews (residential proxy recommended). Uses Playwright (headless browser) to handle ConsumerAffairs' PerimeterX bot protection.
+
+## Try it free
+
+Every Apify account includes free credits. Set `maxReviewsPerCompany: 10` to test — no payment method required.
 
 ## Use cases
 
@@ -131,7 +138,18 @@ curl "https://api.apify.com/v2/acts/quasi_grass~consumeraffairs-review-scraper/r
   -d '{"companyUrls": ["homeowners/american_home_shield"], "maxReviewsPerCompany": 100}'
 ```
 
-Or use the [Apify client](https://docs.apify.com/api/client/js/) for Node.js, Python, or any language. Works with Google Sheets, Zapier, Make, Slack, and 100+ integrations.
+```python
+from apify_client import ApifyClient
+
+client = ApifyClient("YOUR_TOKEN")
+run = client.actor("quasi_grass/consumeraffairs-review-scraper").call(
+    run_input={"companyUrls": ["homeowners/american_home_shield"], "maxReviewsPerCompany": 100}
+)
+for item in client.dataset(run["defaultDatasetId"]).iterate_items():
+    print(item)
+```
+
+Works with Google Sheets, Zapier, Make, Slack, and 100+ integrations via the [Apify platform](https://docs.apify.com/integrations).
 
 ## Related scrapers
 
