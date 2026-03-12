@@ -1,0 +1,36 @@
+{
+    "$schema": "https://apify.com/schemas/v1/input.ide.json",
+    "title": "ConsumerAffairs Review Scraper",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "companyUrls": {
+            "title": "Company URLs or slugs",
+            "type": "array",
+            "description": "ConsumerAffairs company page URLs (e.g. https://www.consumeraffairs.com/homeowners/american_home_shield.html) or full paths (e.g. homeowners/american_home_shield).",
+            "editor": "stringList",
+            "prefill": ["homeowners/american_home_shield"]
+        },
+        "maxReviewsPerCompany": {
+            "title": "Max reviews per company",
+            "type": "integer",
+            "description": "Maximum number of reviews to extract per company. Set 0 for unlimited.",
+            "default": 100,
+            "minimum": 0
+        },
+        "includeCompanyInfo": {
+            "title": "Include company profile info",
+            "type": "boolean",
+            "description": "Include a company profile summary (average rating, total reviews) as the first result for each company.",
+            "default": true
+        },
+        "proxyConfig": {
+            "title": "Proxy configuration",
+            "type": "object",
+            "description": "Select proxies to use. Apify Proxy is recommended for bypassing bot protection.",
+            "editor": "proxy",
+            "default": { "useApifyProxy": true, "apifyProxyGroups": ["RESIDENTIAL"] }
+        }
+    },
+    "required": ["companyUrls"]
+}

@@ -1,0 +1,32 @@
+{
+    "actorSpecification": 1,
+    "views": {
+        "reviews": {
+            "title": "Reviews",
+            "transformation": {
+                "fields": [
+                    "companyName",
+                    "authorName",
+                    "rating",
+                    "reviewTitle",
+                    "reviewText",
+                    "publishedDate",
+                    "reviewUrl"
+                ],
+                "flatten": ["starDistribution"]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "companyName": { "label": "Company", "format": "text" },
+                    "authorName": { "label": "Author", "format": "text" },
+                    "rating": { "label": "Rating", "format": "number" },
+                    "reviewTitle": { "label": "Title", "format": "text" },
+                    "reviewText": { "label": "Review", "format": "text" },
+                    "publishedDate": { "label": "Date", "format": "text" },
+                    "reviewUrl": { "label": "URL", "format": "link" }
+                }
+            }
+        }
+    }
+}
